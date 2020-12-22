@@ -16,7 +16,8 @@
           <input type="checkbox" v-model="todo.isDone" />
           <div class="done-item" v-if="todo.isDone">{{ todo.item }}</div>
           <div v-else>{{ todo.item }}</div>
-          <div v-on:click="deleteTodo(index)" class="del-btn">
+          <div class="todo-id">{{ todo.id }}</div>
+          <div v-on:click="deleteTodo(todo, index)" class="del-btn">
             <i class="fas fa-times"></i>
           </div>
         </div>
@@ -40,18 +41,22 @@ export default {
   methods: {
     addTodo() {
       if (this.inputText != "") {
+        const ref = firebase
+          .firestore()
+          .collection("todoA")
+          .doc();
+        ref.set({
+          item: this.inputText,
+          isDone: false,
+          id: ref.id,
+        });
+
         this.todoA.push({
           item: this.inputText,
           isDone: false,
+          id: ref.id,
         });
 
-        firebase
-          .firestore()
-          .collection("todoA")
-          .add({
-            item: this.inputText,
-            isDone: false,
-          });
         console.log("added text:", this.todoA);
 
         this.inputText = "";
@@ -63,9 +68,14 @@ export default {
     checked(todo) {
       todo.isDone = "true";
     },
-    deleteTodo(index) {
+    deleteTodo(todo, index) {
       this.todoA.splice(index, 1);
       console.log("result:", this.todoA);
+      firebase
+        .firestore()
+        .collection("todoA")
+        .doc(todo.id)
+        .delete();
     },
   },
   created() {
