@@ -13,7 +13,11 @@
     <div class="todo-area">
       <div v-for="(todo, index) in todoA" :key="todo.id">
         <div class="todo">
-          <input type="checkbox" v-model="todo.isDone" />
+          <input
+            type="checkbox"
+            v-model="todo.isDone"
+            v-on:change="checked(todo)"
+          />
           <div class="done-item" v-if="todo.isDone">{{ todo.item }}</div>
           <div v-else>{{ todo.item }}</div>
           <div class="todo-id">{{ todo.id }}</div>
@@ -39,6 +43,7 @@ export default {
     };
   },
   methods: {
+    // 新規のtodoを作成
     addTodo() {
       if (this.inputText != "") {
         const ref = firebase
@@ -65,9 +70,23 @@ export default {
         this.header = "add me";
       }
     },
+    // チェックする
     checked(todo) {
-      todo.isDone = "true";
+      var which = firebase
+        .firestore()
+        .collection("todoA")
+        .doc(todo.id);
+
+      which.set(
+        {
+          isDone: todo.isDone,
+        },
+        {
+          merge: true,
+        }
+      );
     },
+    // 削除する
     deleteTodo(todo, index) {
       this.todoA.splice(index, 1);
       console.log("result:", this.todoA);
@@ -78,6 +97,7 @@ export default {
         .delete();
     },
   },
+  // リロード時にデータを取得
   created() {
     firebase
       .firestore()
@@ -87,7 +107,7 @@ export default {
         for (const doc of collection.docs) {
           const todo = doc.data(); // { createdAt: "xxx", title: "asdfasdf" }
           this.todoA.push(todo);
-          console.log("firebace:", doc.data());
+          console.log("firebase:", doc.data());
         }
       });
   },
