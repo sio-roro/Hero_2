@@ -24,6 +24,11 @@ const routes = [
     name: "todo",
     component: () => import("../views/Todo.vue"),
   },
+  {
+    path: "/show/:id",
+    name: "show",
+    component: () => import("../views/Show.vue"),
+  },
 ];
 
 const router = new VueRouter({

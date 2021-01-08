@@ -24,6 +24,9 @@
           <div v-on:click="deleteTodo(todo, index)" class="del-btn">
             <i class="fas fa-times"></i>
           </div>
+          <router-link :to="{ path: `/show/${todo.id}` }">
+            show
+          </router-link>
         </div>
       </div>
     </div>
@@ -114,9 +117,6 @@ export default {
 };
 </script>
 <style>
-h1 {
-  color: #e6e6e6;
-}
 .done-item {
   text-decoration: line-through;
 }
