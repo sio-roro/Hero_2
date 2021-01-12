@@ -43,6 +43,7 @@ export default {
       todoA: [],
       header: "HERO 2.0",
       inputText: "",
+      userInfo: null,
     };
   },
   methods: {
@@ -57,6 +58,7 @@ export default {
           item: this.inputText,
           isDone: false,
           id: ref.id,
+          userId: this.userInfo.uid,
         });
 
         this.todoA.push({
@@ -113,6 +115,13 @@ export default {
           console.log("firebase:", doc.data());
         }
       });
+  },
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.isAuth = !!user;
+      this.userInfo = user;
+      console.log("User:", this.userInfo.displayName);
+    });
   },
 };
 </script>
