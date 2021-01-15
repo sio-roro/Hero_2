@@ -20,7 +20,7 @@
 </template>
 <script>
 import firebase from "firebase";
-
+import { Slide } from "vue-burger-menu";
 export default {
   data() {
     return {
