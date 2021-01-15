@@ -103,10 +103,18 @@ export default {
     },
   },
   // リロード時にデータを取得
-  created() {
+  created() {},
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.isAuth = !!user;
+      this.userInfo = user;
+      console.log("User:", this.userInfo.displayName);
+    });
+    var user = firebase.auth().currentUser;
     firebase
       .firestore()
       .collection("todoA")
+      .where("userId", "==", user.uid)
       .get()
       .then((collection) => {
         for (const doc of collection.docs) {
@@ -115,13 +123,6 @@ export default {
           console.log("firebase:", doc.data());
         }
       });
-  },
-  mounted() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.isAuth = !!user;
-      this.userInfo = user;
-      console.log("User:", this.userInfo.displayName);
-    });
   },
 };
 </script>
