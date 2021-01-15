@@ -5,6 +5,7 @@
     <input type="checkbox" v-model="todo.isDone" v-on:change="checked(todo)" />
     <div class="done-item" v-if="todo.isDone">{{ this.todo.item }}</div>
     <div v-else>{{ this.todo.item }}</div>
+    <div class="group">{{ this.todo.group }}</div>
   </div>
 </template>
 <script>
