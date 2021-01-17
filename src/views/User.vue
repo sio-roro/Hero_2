@@ -5,25 +5,29 @@
     <div class="user_todoA">
       <div>groupA</div>
       <div v-for="todo in userTodoA" :key="todo.id">
-        {{ todo.item }}
+        <div class="done-item" v-if="todo.isDone">{{ todo.item }}</div>
+        <div v-else>{{ todo.item }}</div>
       </div>
     </div>
     <div class="user_todoB">
       <div>groupB</div>
       <div v-for="todo in userTodoB" :key="todo.id">
-        {{ todo.item }}
+        <div class="done-item" v-if="todo.isDone">{{ todo.item }}</div>
+        <div v-else>{{ todo.item }}</div>
       </div>
     </div>
     <div class="user_todoC">
       <div>groupC</div>
       <div v-for="todo in userTodoC" :key="todo.id">
-        {{ todo.item }}
+        <div class="done-item" v-if="todo.isDone">{{ todo.item }}</div>
+        <div v-else>{{ todo.item }}</div>
       </div>
     </div>
     <div class="user_todoD">
       <div>groupD</div>
       <div v-for="todo in userTodoD" :key="todo.id">
-        {{ todo.item }}
+        <div class="done-item" v-if="todo.isDone">{{ todo.item }}</div>
+        <div v-else>{{ todo.item }}</div>
       </div>
     </div>
   </div>
@@ -123,5 +127,8 @@ export default {
 .user_todoD {
   height: 100px;
   border: 1px solid #ff1493;
+}
+.done-item {
+  text-decoration: line-through;
 }
 </style>
