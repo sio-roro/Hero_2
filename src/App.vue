@@ -1,17 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <i class="fas fa-paw" v-on:click="showFriend"></i>
-      <router-link to="/">Home</router-link>
-      <div v-if="isAuth">
-        <router-link to="/about">About</router-link>
-        <router-link to="/todo">Todo</router-link>
-        <div class="username">Current User:{{ this.userInfo.displayName }}</div>
-      </div>
-
       <div class="links">
-        <a v-if="isAuth" @click="signOut" class="button--grey">signOut</a>
-        <a v-else @click="signIn" class="button--green">signIn</a>
+        <a v-if="isAuth" @click="signOut" class="button--grey menu-list"></a>
+        <a v-else @click="signIn" class="button--green menu-list">signIn</a>
       </div>
     </div>
     <div class="contaner">
@@ -32,15 +24,24 @@
       <!--サイドバー-->
       <transition name="menu">
         <div class="menu" v-show="ActiveBtn">
+          <div v-if="isAuth">
+            <router-link class="menu-list" to="/todo"
+              >{{ this.userInfo.displayName }} 's Todo</router-link
+            >
+          </div>
+          <div class="links">
+            <a v-if="isAuth" @click="signOut" class="button--grey menu-list"
+              >signOut</a
+            >
+            <a v-else @click="signIn" class="button--green menu-list">signIn</a>
+          </div>
           <div class="users" v-for="user in allUser" :key="user.id">
-            <ul>
-              <router-link to="/todo" v-if="user.userId == userInfo.uid"
-                ><li>{{ user.userName }}</li></router-link
-              >
-              <router-link :to="{ path: `/user/${user.userId}` }" v-else>
-                <li>{{ user.userName }}</li></router-link
-              >
-            </ul>
+            <router-link
+              :to="{ path: `/user/${user.userId}` }"
+              v-if="user.userId != userInfo.uid"
+            >
+              <li class="menu-list">{{ user.userName }}</li></router-link
+            >
           </div>
         </div>
       </transition>
@@ -107,6 +108,7 @@ export default {
     },
     signOut: function() {
       firebase.auth().signOut();
+      location.reload();
     },
     showFriend: function() {
       console.log("wow");
@@ -127,11 +129,14 @@ export default {
 
 #nav {
   padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: whitesmoke;
 }
 
 #nav a.router-link-exact-active {
@@ -143,7 +148,9 @@ export default {
 .button--grey {
   color: #2c3e50;
 }
-
+.links {
+  border-bottom: 2px solid #000;
+}
 .hamburger_btn {
   position: fixed; /*常に最上部に表示したいので固定*/
   top: 0;
@@ -160,7 +167,7 @@ export default {
   left: 20px;
   width: 32px;
   height: 2px;
-  background: #333333;
+  background: #008b8b;
   text-align: center;
 }
 
@@ -228,5 +235,12 @@ export default {
 .menu ul {
   margin: 1rem;
   padding: 0;
+}
+.username {
+  color: whitesmoke;
+}
+.menu-list:hover {
+  color: #008b8b;
+  transition: all 0.5s;
 }
 </style>
