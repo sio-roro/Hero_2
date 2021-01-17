@@ -34,7 +34,12 @@
         <div class="menu" v-show="ActiveBtn">
           <div class="users" v-for="user in allUser" :key="user.id">
             <ul>
-              <li>{{ user.userName }}</li>
+              <router-link to="/todo" v-if="user.userId == userInfo.uid"
+                ><li>{{ user.userName }}</li></router-link
+              >
+              <router-link :to="{ path: `/user/${user.userId}` }" v-else>
+                <li>{{ user.userName }}</li></router-link
+              >
             </ul>
           </div>
         </div>
@@ -66,7 +71,7 @@ export default {
       firebase
         .firestore()
         .collection("User")
-        .doc(this.userInfo.displayName)
+        .doc(this.userInfo.uid)
         .set(
           {
             userId: this.userInfo.uid,
