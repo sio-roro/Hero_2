@@ -19,7 +19,7 @@
           />
           <label for="input1">Todo</label>
         </div>
-        <button v-on:click="addTodo" class="btn-flat">Add it</button>
+        <button v-on:click="addTodo">Add it</button>
       </div>
     </div>
     <div class="todo_contaner">
@@ -197,6 +197,7 @@ import draggable from "vuedraggable";
 export default {
   name: "Todo",
   components: { draggable },
+
   data() {
     return {
       options: {
@@ -229,6 +230,7 @@ export default {
           id: ref.id,
           userId: this.userInfo.uid,
           group: "todoA",
+          userName: this.userInfo.displayName,
         });
 
         this.todoA.push({
@@ -237,14 +239,15 @@ export default {
           id: ref.id,
           userId: this.userInfo.uid,
           group: "todoA",
+          userName: this.userInfo.displayName,
         });
 
         console.log("added text:", this.todoA);
 
         this.inputText = "";
-        this.header = "Registered";
+        this.header = "(`Д´)ゞﾗｼﾞｬｰ!!";
       } else {
-        this.header = "Edit me!!";
+        this.header = "…φ(。。*)ｲｼﾞｲｼﾞ";
         this.coution = true;
       }
     },
@@ -264,9 +267,9 @@ export default {
         }
       );
       if (todo.isDone) {
-        this.header = "Done!!!";
+        this.header = "（　･`ー･´） + ｷﾘｯ";
       } else {
-        this.header = "Removed";
+        this.header = "_φ［・ω・｀*］ﾒﾓﾒﾓ♪";
       }
     },
     // 削除する
@@ -278,7 +281,7 @@ export default {
         .collection("todoA")
         .doc(todo.id)
         .delete();
-      this.header = "Deleted";
+      this.header = "(´∀｀*)ﾉｼ　ﾊﾞｲﾊﾞｲ";
     },
     dragList: function(event, listIndex) {
       console.log(listIndex);
@@ -330,6 +333,7 @@ export default {
     },
   },
   // リロード時にデータを取得
+
   created() {},
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -657,5 +661,9 @@ button:hover {
   background-color: #ff8c00;
   transition: all 0.3s;
   border: 0px solid #42b983;
+}
+.comment-todo {
+  color: #fff;
+  font-size: 50px;
 }
 </style>

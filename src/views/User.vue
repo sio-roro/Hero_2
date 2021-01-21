@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="user">
     <h1>usernPage</h1>
     <h1>{{ nowUser.userName }}</h1>
     <div class="user_todoA">
@@ -37,6 +37,13 @@ import firebase from "firebase";
 export default {
   name: "user",
   components: {},
+  beforeRouteUpdate(to, from, next) {
+    //再描画前のアクション
+
+    next();
+    location.reload();
+    //再描画後のアクション
+  },
   data() {
     return {
       nowUser: [],
@@ -46,6 +53,7 @@ export default {
       userTodoD: [],
     };
   },
+
   mounted: function() {
     firebase
       .firestore()
@@ -112,6 +120,12 @@ export default {
 };
 </script>
 <style>
+#app {
+  background-color: #484848;
+}
+.user {
+  background-color: #484848;
+}
 .user_todoA {
   height: 100px;
   border: 1px soild #000;
