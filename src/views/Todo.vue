@@ -282,6 +282,16 @@ export default {
         .doc(todo.id)
         .delete();
       this.header = "(´∀｀*)ﾉｼ　ﾊﾞｲﾊﾞｲ";
+      firebase
+        .firestore()
+        .collection("Comment")
+        .where("todoId", "==", todo.id)
+        .get()
+        .then((comments) => {
+          for (const comment in comments) {
+            comment.delete();
+          }
+        });
     },
     dragList: function(event, listIndex) {
       console.log(listIndex);

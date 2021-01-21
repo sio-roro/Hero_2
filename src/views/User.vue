@@ -20,7 +20,7 @@
           <div class="user-todo-area">
             <div v-for="todo in userTodoA" :key="todo.id" class="user-todoCard">
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment"></i>
+                <i class="fas fa-comment add-link"></i>
               </router-link>
               <div class="user-done-item user-todo" v-if="todo.isDone">
                 {{ todo.item }}
@@ -36,7 +36,7 @@
           <div class="user-todo-area">
             <div v-for="todo in userTodoB" :key="todo.id" class="user-todoCard">
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment"></i>
+                <i class="fas fa-comment add-link"></i>
               </router-link>
               <div class="user-done-item" v-if="todo.isDone">
                 {{ todo.item }}
@@ -52,7 +52,7 @@
           <div class="user-todo-area">
             <div v-for="todo in userTodoC" :key="todo.id" class="user-todoCard">
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment"></i>
+                <i class="fas fa-comment add-link"></i>
               </router-link>
               <div class="user-done-item user-todo" v-if="todo.isDone">
                 {{ todo.item }}
@@ -68,7 +68,7 @@
           <div class="user-todo-area">
             <div v-for="todo in userTodoD" :key="todo.id" class="user-todoCard">
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment"></i>
+                <i class="fas fa-comment add-link"></i>
               </router-link>
               <div class="user-done-itemuser-todo" v-if="todo.isDone">
                 {{ todo.item }}
@@ -362,12 +362,12 @@ body {
   background-color: #dcdcdc;
   min-width: 25%;
 }
-.fa-comment {
+.add-link {
   color: #008b80;
   font-size: 25px;
   padding: 2px 7px 0px 10px;
 }
-.fa-comment:hover {
+.add-link:hover {
   color: #42b983;
   transition: all 0.3s;
 }
