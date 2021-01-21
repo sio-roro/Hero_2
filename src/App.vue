@@ -46,7 +46,7 @@
         </div>
       </transition>
     </div>
-    <div v-if="isAuth">
+    <div v-if="isAuth" class="router">
       <router-view />
     </div>
   </div>
@@ -125,6 +125,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   background-color: #484848;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.router {
+  width: 100%;
 }
 body {
   background-color: #484848;

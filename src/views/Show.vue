@@ -12,7 +12,19 @@
       {{ this.todo.item }}
     </label>
     <label v-else for="box" class="comment-todo">{{ this.todo.item }}</label>
-    <h2 class="group">{{ this.todo.group }} | {{ this.todo.userName }}</h2>
+    <h2 class="group">
+      {{ this.todo.group }} |
+      <router-link
+        :to="{ path: `/user/${todo.userId}` }"
+        v-if="todo.userId != userInfo.uid"
+        class="show-userName"
+      >
+        {{ todo.userName }}</router-link
+      >
+      <router-link v-else to="/todo" class="show-userName">
+        {{ todo.userName }}</router-link
+      >
+    </h2>
 
     <div class="input-area">
       <div class="text-input">
@@ -260,7 +272,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 1500px;
+  width: 100%;
 }
 .done-item {
   text-decoration: line-through;
@@ -277,6 +289,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .thank {
   width: 100%;
@@ -287,6 +300,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .comment-header {
   display: flex;
@@ -394,7 +408,7 @@ input[type="checkbox"] {
   display: none;
 }
 
-input[type="checkbox"] + label {
+input[type="checkbox"] + .comment-todo {
   display: block;
   position: relative;
   padding-left: 35px;
@@ -407,11 +421,11 @@ input[type="checkbox"] + label {
   -ms-user-select: none;
 }
 
-input[type="checkbox"] + label:last-child {
+input[type="checkbox"] + .comment-todo:last-child {
   margin-bottom: 0;
 }
 
-input[type="checkbox"] + label:before {
+input[type="checkbox"] + .comment-todo:before {
   content: "";
   display: block;
   width: 20px;
@@ -425,7 +439,7 @@ input[type="checkbox"] + label:before {
   transition: all 0.12s, border-color 0.08s;
 }
 
-input[type="checkbox"]:checked + label:before {
+input[type="checkbox"]:checked + .comment-todo:before {
   width: 10px;
   top: -5px;
   left: 5px;
@@ -478,5 +492,13 @@ input[type="checkbox"]:checked + label:before {
 .fa-times:hover {
   color: red;
   transition: all 0.3s;
+}
+.show-userName {
+  text-decoration: none;
+  color: #fff;
+}
+.show-userName:hover {
+  color: #008b8b;
+  transition: all 0.5s;
 }
 </style>
