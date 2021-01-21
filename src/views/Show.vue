@@ -21,7 +21,7 @@
       >
         {{ todo.userName }}</router-link
       >
-      <router-link v-else to="/todo" class="show-userName">
+      <router-link v-else to="/" class="show-userName">
         {{ todo.userName }}</router-link
       >
     </h2>
@@ -32,7 +32,7 @@
           type="text"
           v-model="nowComment"
           id="input1"
-          placeholder="Type what to do today in here!"
+          :placeholder="placeholder"
         />
         <label for="input1">Todo</label>
       </div>
@@ -126,6 +126,7 @@ export default {
       doneComments: [],
       userInfo: null,
       nowItem: null,
+      placeholder: "Type comment to this todo!",
     };
   },
   created() {
@@ -204,8 +205,10 @@ export default {
         console.log("added text:", this.comments);
 
         this.nowComment = "";
+        this.placeholder = "(´▽｀)ｱﾘｶﾞﾄ!";
       } else {
         console.log("comment input is empty");
+        this.placeholder = "(´・ω・`)";
       }
     },
     deleteTodo(comment, index, group) {
@@ -216,7 +219,7 @@ export default {
         .collection("Comment")
         .doc(comment.id)
         .delete();
-      this.header = "(´∀｀*)ﾉｼ　ﾊﾞｲﾊﾞｲ";
+      this.placeholder = "ヽ(･_･、)ノ";
     },
     checked(todo) {
       var which = firebase

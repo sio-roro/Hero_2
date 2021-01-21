@@ -2,8 +2,16 @@
   <div id="app">
     <div id="nav">
       <div class="links">
-        <a v-if="isAuth" @click="signOut" class="button--grey menu-list"></a>
-        <a v-else @click="signIn" class="button--green menu-list">signIn</a>
+        <div v-if="isAuth">
+          <router-link class="menu-list" to="/"
+            ><i class="fas fa-home"></i>{{ this.userInfo.displayName }}
+          </router-link>
+        </div>
+        <div class="login-menu">
+          <a v-if="isAuth" @click="signOut" class="button--grey menu-list"
+            >signOut</a
+          >
+        </div>
       </div>
     </div>
     <div class="contaner">
@@ -24,18 +32,9 @@
       <!--サイドバー-->
       <transition name="menu">
         <div class="menu" v-show="ActiveBtn">
-          <div v-if="isAuth">
-            <router-link class="menu-list" to="/todo"
-              >{{ this.userInfo.displayName }} 's Todo</router-link
-            >
-          </div>
-          <div class="links">
-            <a v-if="isAuth" @click="signOut" class="button--grey menu-list"
-              >signOut</a
-            >
-            <a v-else @click="signIn" class="button--green menu-list">signIn</a>
-          </div>
-          <div class="users" v-for="user in allUser" :key="user.id">
+          <input type="text" v-model="keyword" placeholder="Search friend" />
+
+          <div class="users" v-for="user in filteredUsers" :key="user.id">
             <router-link
               :to="{ path: `/user/${user.userId}` }"
               v-if="user.userId != userInfo.uid"
@@ -49,9 +48,13 @@
     <div v-if="isAuth" class="router">
       <router-view />
     </div>
+    <div v-else>
+      <a @click="signIn" class="signIn ">signIn with Google</a>
+    </div>
   </div>
 </template>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-simple-spinner@1.2.8/dist/vue-simple-spinner.min.js"></script>
 <script>
 import firebase from "firebase";
 
@@ -62,6 +65,7 @@ export default {
       userInfo: null,
       ActiveBtn: false,
       allUser: [],
+      keyword: "",
     };
   },
   mounted: function() {
@@ -114,6 +118,21 @@ export default {
       this.fridendIsShowen = !this.fridendIsShowen;
     },
   },
+  computed: {
+    filteredUsers: function() {
+      var users = [];
+
+      for (var i in this.allUser) {
+        var user = this.allUser[i];
+
+        if (user.userName.indexOf(this.keyword) !== -1) {
+          users.push(user);
+        }
+      }
+
+      return users;
+    },
+  },
 };
 </script>
 
@@ -137,29 +156,16 @@ body {
   background-color: #484848;
 }
 #nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #fff;
   padding: 30px;
+  font-size: 25px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
 }
 
-#nav a {
-  font-weight: bold;
-  color: whitesmoke;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-.button--green {
-  color: #42b983;
-}
-.button--grey {
-  color: #2c3e50;
-}
-.links {
-  border-bottom: 2px solid #000;
-}
 .hamburger_btn {
   position: fixed; /*常に最上部に表示したいので固定*/
   top: 0;
@@ -207,7 +213,7 @@ body {
 }
 
 /*サイドバー*/
-.menu-enter-active,
+
 .menu-leave-active {
   transition: opacity 0.4s;
 }
@@ -234,7 +240,9 @@ body {
   height: 80rem;
   top: 0;
   right: 0;
+  overflow: scroll;
 }
+
 .menu a {
   color: rgb(66, 66, 66);
   text-decoration: none;
@@ -251,5 +259,30 @@ body {
 .menu-list:hover {
   color: #008b8b;
   transition: all 0.5s;
+}
+
+.signIn {
+  font-weight: bold;
+  padding: 10px;
+  border: 2px solid #fff;
+  color: #fff;
+}
+.signIn a {
+  text-decoration: none;
+}
+.signIn:hover {
+  color: #42b983;
+  transition: all 0.5s;
+}
+.menu-list {
+  color: #fff;
+  text-decoration: none;
+}
+.links {
+  display: flex;
+  flex-direction: row;
+}
+.login-menu {
+  padding-left: 10px;
 }
 </style>
