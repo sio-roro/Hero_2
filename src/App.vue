@@ -99,7 +99,6 @@ export default {
         }
       });
   },
-  created: function() {},
 
   methods: {
     signIn: function() {
@@ -125,8 +124,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #484848;
 }
-
+body {
+  background-color: #484848;
+}
 #nav {
   padding: 30px;
   display: flex;
