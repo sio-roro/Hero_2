@@ -55,7 +55,7 @@
               >
               <label v-else v-bind:for="'box-1' + index">{{ todo.item }}</label>
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment"></i>
+                <i class="fas fa-comment">{{ todo.comment }}</i>
               </router-link>
               <div v-on:click="deleteTodo(todo, index, todoA)" class="del-btn">
                 <i class="fas fa-times"></i>
@@ -96,7 +96,7 @@
               >
               <label v-else v-bind:for="'box-2' + index">{{ todo.item }}</label>
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment"></i>
+                <i class="fas fa-comment">{{ todo.comment }}</i>
               </router-link>
               <div v-on:click="deleteTodo(todo, index, todoB)" class="del-btn">
                 <i class="fas fa-times"></i>
@@ -137,7 +137,7 @@
               >
               <label v-else v-bind:for="'box-3' + index">{{ todo.item }}</label>
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment"></i>
+                <i class="fas fa-comment">{{ todo.comment }}</i>
               </router-link>
               <div v-on:click="deleteTodo(todo, index, todoC)" class="del-btn">
                 <i class="fas fa-times"></i>
@@ -178,7 +178,7 @@
               >
               <label v-else v-bind:for="'box-4' + index">{{ todo.item }}</label>
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment"></i>
+                <i class="fas fa-comment">{{ todo.comment }}</i>
               </router-link>
               <div v-on:click="deleteTodo(todo, index, todoD)" class="del-btn">
                 <i class="fas fa-times"></i>
@@ -231,6 +231,7 @@ export default {
           userId: this.userInfo.uid,
           group: "todoA",
           userName: this.userInfo.displayName,
+          comment: 0,
         });
 
         this.todoA.push({
@@ -240,6 +241,7 @@ export default {
           userId: this.userInfo.uid,
           group: "todoA",
           userName: this.userInfo.displayName,
+          comment: 0,
         });
 
         console.log("added text:", this.todoA);
