@@ -201,7 +201,12 @@ export default {
           userId: this.userInfo.uid,
           thank: false,
         });
-
+        const number = this.todo.comment;
+        firebase
+          .firestore()
+          .collection("todoA")
+          .doc(this.$route.params["id"])
+          .update({ comment: number + 1 });
         console.log("added text:", this.comments);
 
         this.nowComment = "";
@@ -220,6 +225,13 @@ export default {
         .doc(comment.id)
         .delete();
       this.placeholder = "ヽ(･_･、)ノ";
+      const number = this.todo.comment;
+      firebase
+        .firestore()
+        .collection("todoA")
+        .doc(this.$route.params["id"])
+        .update({ comment: number - 1 });
+      console.log("added text:", this.comments);
     },
     checked(todo) {
       var which = firebase

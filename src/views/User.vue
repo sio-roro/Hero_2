@@ -20,7 +20,7 @@
           <div class="user-todo-area">
             <div v-for="todo in userTodoA" :key="todo.id" class="user-todoCard">
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment add-link"></i>
+                <i class="fas fa-comment add-link">{{ todo.comment }}</i>
               </router-link>
               <div class="user-done-item user-todo" v-if="todo.isDone">
                 {{ todo.item }}
@@ -36,7 +36,7 @@
           <div class="user-todo-area">
             <div v-for="todo in userTodoB" :key="todo.id" class="user-todoCard">
               <router-link :to="{ path: `/show/${todo.id}` }">
-                <i class="fas fa-comment add-link"></i>
+                <i class="fas fa-comment add-link">{{ todo.comment }}</i>
               </router-link>
               <div class="user-done-item" v-if="todo.isDone">
                 {{ todo.item }}
